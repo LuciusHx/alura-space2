@@ -50,9 +50,7 @@ def cadastro(request):
         if form.is_valid():
             
             #Verifica se as senhas são iguais 
-            if form["senha_1"].value() != form["senha_2"].value():
-                messages.error(request, 'As senhas não são iguais.')
-                return redirect('cadastro') 
+            
             
             #Se forem iguais, as novas variáveis recebem os dados
             nome = form["nome_cadastro"].value()
