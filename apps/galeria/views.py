@@ -69,8 +69,22 @@ def deletar_imagem(request, foto_id):
 def filtro(request, categoria):
     if categoria == "TODOS":
         fotografias = Fotografia.objects.order_by("data_fotografia").filter(publicada=True)
+    else:
+        fotografias = Fotografia.objects.order_by("data_fotografia").filter(publicada=True, categoria=categoria)
+    
+    # Debugging prints
+    print(f"Categoria: {categoria}")
+    print(f"Fotografias encontradas: {fotografias.count()}")
+    
+    if not fotografias.exists():
+        messages.error(request, f'Nenhuma fotografia encontrada para a categoria: {categoria}')
+    
+    return render(request, "galeria/index.html", {"cards": fotografias})
+'''    if categoria == "TODOS":
+        fotografias = Fotografia.objects.order_by("data_fotografia").filter(publicada=True)
         return render(request, "galeria/index.html", {"cards": fotografias})
     
     
     fotografias = Fotografia.objects.order_by("data_fotografia").filter(publicada=True, categoria=categoria)
-    return render(request, 'galeria/index.html', {'cards':fotografias})
+    return render(request, 'galeria/index.html', {"cards": fotografias})
+'''
