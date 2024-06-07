@@ -6,15 +6,17 @@ from django.contrib import messages
 
 
 def index(request):
+    
+    #se o usuario não estiver logado
     if not request.user.is_authenticated:
-        messages.error(request, 'Usuário não logado')
+        messages.error(request, 'Usuário não logado.')
         return redirect('login')
         
     
     fotografias = Fotografia.objects.order_by("data_fotografia").filter(publicada=True)
     return render(request, 'galeria/index.html', {"cards": fotografias})
 
-def imagem(request, foto_id):
+def imagem(request, foto_id):                  #primary key
     fotografia = get_object_or_404(Fotografia, pk=foto_id)
     return render(request, 'galeria/imagem.html', {"fotografia": fotografia})
 
@@ -80,11 +82,3 @@ def filtro(request, categoria):
         messages.error(request, f'Nenhuma fotografia encontrada para a categoria: {categoria}')
     
     return render(request, "galeria/index.html", {"cards": fotografias})
-'''    if categoria == "TODOS":
-        fotografias = Fotografia.objects.order_by("data_fotografia").filter(publicada=True)
-        return render(request, "galeria/index.html", {"cards": fotografias})
-    
-    
-    fotografias = Fotografia.objects.order_by("data_fotografia").filter(publicada=True, categoria=categoria)
-    return render(request, 'galeria/index.html', {"cards": fotografias})
-'''

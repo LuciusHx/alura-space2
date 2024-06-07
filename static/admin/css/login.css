@@ -1,5 +1,9 @@
 /* LOGIN FORM */
 
+body {
+    height: 100vw;
+}
+
 .login {
     background: var(--darkened-bg);
     height: auto;
